@@ -45,7 +45,7 @@ void display(void)
 	
 	for (int i = 0; i < 24; i++)
 	{
-		//if (_checkers[i].IsAlive) continue;
+		if (_checkers[i].IsDead) continue;
 
 		glBegin(GL_POLYGON);
 		glColor3f(_checkers[i].checkerColor.R, _checkers[i].checkerColor.G, _checkers[i].checkerColor.B);
@@ -60,9 +60,25 @@ void display(void)
 	glutSwapBuffers();
 }
 
-void mouseMotion(int x, int y) {
+void mouse(int button, int state, int x, int y)
+{
+	isPressed = button == GLUT_LEFT_BUTTON && state == GLUT_DOWN;
 
+	if (button == GLUT_RIGHT_BUTTON)
+	{
+		for (int i = 0; i < 24; i++)
+		{
+			if (_checkers[i].X - size / 2 < x - 400 && _checkers[i].X + size / 2 > x - 400 && _checkers[i].Y - size / 2 < 400 - y && _checkers[i].Y + size / 2 > 400 - y)
+			{
+				_checkers[i].IsDead = true;
+				glutPostRedisplay();
+			}
+		}
+	}
+}
 
+void mouseMotion(int x, int y) 
+{
 	for (int i = 0; i < 24; i++)
 	{
 		if (_checkers[i].X - size / 2 < x - 400 && _checkers[i].X + size / 2 > x - 400 && _checkers[i].Y - size / 2 < 400 - y && _checkers[i].Y + size / 2 > 400 - y)
@@ -70,6 +86,8 @@ void mouseMotion(int x, int y) {
 			_checkers[i].X = x - 400;
 			_checkers[i].Y = 400 - y;
 			glutPostRedisplay();
+
+			if (isPressed == true) break;
 		}
 	}
 }
@@ -134,7 +152,8 @@ int main(int argc, char** argv)
 	init();
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+	glutMouseFunc(mouse);
 	glutMotionFunc(mouseMotion);
 	glutMainLoop();
-	return 0;   /* ANSI C requires main to return int. */
+	return 0;
 }

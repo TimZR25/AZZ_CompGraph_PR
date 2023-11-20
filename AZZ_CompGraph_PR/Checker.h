@@ -29,12 +29,13 @@ class Checker
 public:
 	int X;
 	int Y;
-	//bool IsAlive;
+	bool IsDead;
 	Color checkerColor;
 	Checker(int x, int y, Color color)
 	{
 		X = x;
 		Y = y;
+		IsDead = false;
 		checkerColor = color;
 	}
 
@@ -42,6 +43,7 @@ public:
 	{
 		X = 0;
 		Y = 0;
+		IsDead = false;
 		checkerColor = Color();
 	}
 };
