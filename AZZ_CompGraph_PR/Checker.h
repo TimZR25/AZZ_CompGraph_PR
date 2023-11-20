@@ -9,19 +9,8 @@ struct Color
 	GLfloat G;
 	GLfloat B;
 
-	Color(GLfloat r, GLfloat g, GLfloat b)
-	{
-		R = r;
-		G = g;
-		B = b;
-	}
-
-	Color()
-	{
-		R = 1.0;
-		G = 1.0;
-		B = 1.0;
-	}
+	Color(GLfloat r, GLfloat g, GLfloat b);
+	Color();
 };
 
 class Checker
@@ -31,21 +20,9 @@ public:
 	int Y;
 	bool IsDead;
 	Color checkerColor;
-	Checker(int x, int y, Color color)
-	{
-		X = x;
-		Y = y;
-		IsDead = false;
-		checkerColor = color;
-	}
 
-	Checker()
-	{
-		X = 0;
-		Y = 0;
-		IsDead = false;
-		checkerColor = Color();
-	}
+	Checker(int x, int y, Color color);
+	Checker();
 };
 
 
