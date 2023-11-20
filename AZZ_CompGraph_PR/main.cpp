@@ -170,7 +170,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow(argv[0]);
+	glutCreateWindow("Checkers");
 	init();
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
