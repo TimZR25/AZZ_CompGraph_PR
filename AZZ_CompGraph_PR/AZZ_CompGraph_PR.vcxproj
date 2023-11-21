@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Checker.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Main4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Checker.h" />

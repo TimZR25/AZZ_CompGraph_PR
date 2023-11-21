@@ -13,13 +13,22 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\LB3">
+      <UniqueIdentifier>{ba68b323-45ab-4e13-b5ce-7d463317480c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\LB4">
+      <UniqueIdentifier>{5720e1b1-5fc3-4052-8508-86fb70d1c500}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Checker.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\LB3</Filter>
+    </ClCompile>
+    <ClCompile Include="Checker.cpp">
+      <Filter>Исходные файлы\LB3</Filter>
+    </ClCompile>
+    <ClCompile Include="Main4.cpp">
+      <Filter>Исходные файлы\LB4</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
