@@ -2,17 +2,14 @@
 #include <glut.h>
 #include <iostream>
 
-
-GLfloat vertices[][3] = { {-1.0,-1.0,-1.0},{1.0,-1.0,-1.0},
+static int WSize = 800, HSize = 800;
+static GLfloat vertices[][3] = { {-1.0,-1.0,-1.0},{1.0,-1.0,-1.0},
 {1.0,1.0,-1.0},{-1.0,1.0,-1.0},{-1.0,-1.0,1.0},
 {1.0,-1.0,1.0},{1.0,1.0,1.0},{-1.0,1.0,1.0} };
 
-GLfloat colors[][3] = { {1.0, 1.0, 1.0},{1.0,0.0,0.0},
+GLfloat colors[][3] = { {1.0, 0.0, 0.0},{0.0,0.0,0.0},
 {1.0,1.0,0.0},{0.0,1.0,0.0},{0.0,0.0,1.0},
-{1.0,0.0,1.0},{1.0,1.0,1.0},{0.0,1.0,1.0} };
-
-GLfloat spin = 0.0;
-bool isSpinned;
+{1.0,0.0,1.0},{0.5, 0.5, 0.5},{0.0,1.0,1.0} };
 
 void polygon(int a, int b, int c, int d)
 {
@@ -27,6 +24,7 @@ void polygon(int a, int b, int c, int d)
 	glVertex3fv(vertices[d]);
 	glEnd();
 }
+
 void colorcube()
 {
 	polygon(0, 3, 2, 1);
@@ -37,69 +35,64 @@ void colorcube()
 	polygon(0, 1, 5, 4);
 }
 
-void spinDisplay(void)
-{
-	if (isSpinned == false) return;
-
-	spin = spin + 0.05;
-	if (spin > 360.0)
-		spin = spin - 360.0;
-	glutPostRedisplay();
-}
-
-void keyboard(unsigned char key, int x, int y) {
-	if (key == 'x')
-		isSpinned = true; // запустить вращение
-	if (key == 'X')
-		isSpinned = false; // остановить вращение
-	if (key == 27)
-		exit(0);
-}
-
 void display(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 	glPushMatrix();
-	
-	glViewport(0, 400, 400, 400);
+
+	glViewport(0, 400, 400, 400);    //ортографическая
+	gluLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0);
 	colorcube();
 
-	glViewport(400, 400, 400, 400);
-	gluLookAt(0, 0, 0, -1, -1, -1, 0, 1, 0);
+	glViewport(400, 400, 400, 400);      //изометрическая
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0);
+	glRotatef(35, 1.0, 0.0, 0.0);
+	glRotatef(45, 0.0, 1.0, 0.0);
 	colorcube();
 
-	glViewport(0, 0, 400, 400);
+	glViewport(0, 0, 400, 400);     //диметрическая 
+	glLoadIdentity();
+	gluLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0);
+	glRotatef(15.0, 1.0, 0.0, 0.0);
+	glRotatef(15.0, 0.0, 1.0, 0.0);
 	colorcube();
 
-	glViewport(400, 0, 400, 400);
+	glViewport(400, 0, 400, 400);   //перспективная
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glFrustum(-1.0, 1.0, -1.0, 1.0, 2.0, 12.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(0, 0, 4, 0, 0, 0, 0, 1, 0);
+	glRotatef(35, 1.0, 0.0, 0.0);
+	glRotatef(45, 0.0, 1.0, 0.0);
 	colorcube();
 
-
-	glPopMatrix();
 	glutSwapBuffers();
-}
 
+}
 void init(void)
 {
+	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-5, 5, -5, 5, -5, 5);
+	glOrtho(-3, 3, -3, 3, 0, 10);
 	glMatrixMode(GL_MODELVIEW);
 }
 
 int main(int argc, char** argv)
 {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(800, 800);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Cube");
+
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitWindowPosition(150, 150);
+	glutInitWindowSize(WSize, HSize);
+	glutCreateWindow(argv[0]);
 	init();
 	glutDisplayFunc(display);
-	glutKeyboardFunc(keyboard);
-	glutIdleFunc(spinDisplay);
 	glutMainLoop();
 	return 0;
 }
