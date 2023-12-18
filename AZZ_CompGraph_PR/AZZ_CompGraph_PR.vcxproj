@@ -131,6 +131,7 @@
     <ClCompile Include="Checker.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Main4.cpp" />
+    <ClCompile Include="Main5.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Checker.h" />
